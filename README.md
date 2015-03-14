@@ -2,8 +2,8 @@
 
 You can hit
 
-https://<APP>/feed.json
+`https://<APP>/feed.json`
 
 or
 
-https://<APP>/packages.json
+`https://<APP>/packages.json`

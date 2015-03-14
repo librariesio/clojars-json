@@ -52,8 +52,8 @@
             [(:artifact-id m) (dissoc m :artifact-id)]))
         (clojure.string/split-lines data))))
 
-(def packages (process-url get-package-versions package-url))
-(def feed (process-url parse-feed feed-url {:gzip true}))
+;; (def packages (process-url get-package-versions package-url))
+;; (def feed (process-url parse-feed feed-url {:gzip true}))
 
 (defn json-response [s]
   {:headers {"Content-Type" "application/json"}

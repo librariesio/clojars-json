@@ -1,1 +1,1 @@
-web: java $JVM_OPTS -cp target/clj2json-0.1.0-SNAPSHOT-standalone.jar clojure.main -m clj2json.core
+web: java $JVM_OPTS -jar target/clojars-json.jar

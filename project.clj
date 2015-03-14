@@ -1,4 +1,4 @@
-(defproject clj2json "0.1.0-SNAPSHOT"
+(defproject clojars-json "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -9,7 +9,9 @@
                  [ring/ring-defaults "0.1.2"]
                  [ring/ring-jetty-adapter "1.2.1"]]
   :plugins [[lein-ring "0.8.13"]]
-  :ring {:handler clj2json.core/app}
+  :min-lein-version "2.0.0"
+  :ring {:handler clojars-json.core/app}
+  :uberjar-name "clojars-json.jar"
   :profiles {:uberjar {:aot :all}}
-  :main clj2json.core
+  :main clojars-json.core
   )

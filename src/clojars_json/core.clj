@@ -1,4 +1,4 @@
-(ns clj2json.core
+(ns clojars-json.core
   (:require [cheshire.core :as json]
             [clojure.edn :as edn]
             [clojure.java.io :as io]

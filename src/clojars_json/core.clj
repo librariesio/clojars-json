@@ -68,7 +68,9 @@
   (route/not-found "<h1>Page not found</h1>"))
 
 (def app
-  (wrap-defaults app-routes site-defaults))
+  (wrap-defaults #'app-routes (-> site-defaults
+                                  (assoc :security {:anti-forgery false})
+                                  (assoc :params false))))
 
 (defn -main []
    (let [port (Integer. (or (System/getenv "PORT") "8080"))]

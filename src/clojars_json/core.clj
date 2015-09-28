@@ -65,6 +65,13 @@
        (json-response (process-url parse-feed feed-url {:gzip true})))
   (GET "/packages.json" []
        (json-response (process-url get-package-versions package-url)))
+  (POST "/project.clj" []
+        (fn [req]
+          (json-response
+            (-> req
+                (:body)
+                (slurp)
+                (read-string)))))
   (route/not-found "<h1>Page not found</h1>"))
 
 (def app

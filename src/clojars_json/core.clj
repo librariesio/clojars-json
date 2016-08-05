@@ -36,7 +36,7 @@
               stringify-first))
         (clojure.string/split-lines package-data))))
 
-(def package-url "https://clojars.org/repo/all-jars.clj")
+(def package-url "https://clojars.org/repo/all-jars.clj.gz")
 (def feed-url "http://clojars.org/repo/feed.clj.gz")
 
 (defn process-url
@@ -64,7 +64,7 @@
   (GET "/feed.json" []
        (json-response (process-url parse-feed feed-url {:gzip true})))
   (GET "/packages.json" []
-       (json-response (process-url get-package-versions package-url)))
+       (json-response (process-url get-package-versions package-url {:gzip true})))
   (POST "/project.clj" []
         (fn [req]
           (json-response

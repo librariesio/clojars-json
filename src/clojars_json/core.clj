@@ -1,5 +1,6 @@
 (ns clojars-json.core
   (:require [cheshire.core :as json]
+            [clojure.core.memoize :as memo]
             [clojure.edn :as edn]
             [clojure.java.io :as io]
             [compojure.core :refer :all]
@@ -39,11 +40,15 @@
 (def package-url "https://clojars.org/repo/all-jars.clj.gz")
 (def feed-url "http://clojars.org/repo/feed.clj.gz")
 
-(defn process-url
+(defn process-url*
   ([f url]
-     (process-url f url {}))
+     (process-url* f url {}))
   ([f url options]
      (f (fetch-url url options))))
+
+(def process-url
+  (memo/ttl process-url*
+    :ttl/threshold (* 60 60 1000))) ;; one hour
 
 (defn parse-feed [data]
   (kv-to-hash

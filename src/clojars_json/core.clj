@@ -1,5 +1,6 @@
 (ns clojars-json.core
   (:require [cheshire.core :as json]
+            [clojure.core.memoize :as memo]
             [clojure.edn :as edn]
             [clojure.java.io :as io]
             [compojure.core :refer :all]
@@ -36,14 +37,18 @@
               stringify-first))
         (clojure.string/split-lines package-data))))
 
-(def package-url "https://clojars.org/repo/all-jars.clj")
+(def package-url "https://clojars.org/repo/all-jars.clj.gz")
 (def feed-url "http://clojars.org/repo/feed.clj.gz")
 
-(defn process-url
+(defn process-url*
   ([f url]
-     (process-url f url {}))
+     (process-url* f url {}))
   ([f url options]
      (f (fetch-url url options))))
+
+(def process-url
+  (memo/ttl process-url*
+    :ttl/threshold (* 60 60 1000))) ;; one hour
 
 (defn parse-feed [data]
   (kv-to-hash
@@ -64,7 +69,7 @@
   (GET "/feed.json" []
        (json-response (process-url parse-feed feed-url {:gzip true})))
   (GET "/packages.json" []
-       (json-response (process-url get-package-versions package-url)))
+       (json-response (process-url get-package-versions package-url {:gzip true})))
   (POST "/project.clj" []
         (fn [req]
           (json-response
